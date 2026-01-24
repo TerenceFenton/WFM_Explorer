@@ -30,37 +30,6 @@ syndAugSlug <- syndAugSlug[filter2]
 
 
 
-
-# Fetch Current Median Price for Syndicate Augment Mods at Rank 0
-
-
-
-
-getCurrentMedianPrices <- function(slug) {
-  moduleURL <- paste0("https://api.warframe.market/v2/orders/item/", 
-                      slug)
-  
-  orderResp <- GET(
-    moduleURL,
-    add_headers(
-      "Accept" = "application/json",
-      "User-Agent" = "R warframe.market client"
-    )
-  )
-  content <- content(orderResp, as = "text", encoding = "UTF-8")
-  moduleData <- fromJSON(content)
-  
-  # Turn into dataframe and modify it
-  df <- data.frame(plat = moduleData$data$platinum,
-                   type = moduleData$data$type,
-                   rank = moduleData$data$rank
-                   )
-  sellData <- df$plat[df$type == "sell" & df$rank == 0]
-  factor(sellData)
-}
-
-
-
 # Fetch historic sales data
 
 
@@ -115,12 +84,12 @@ iterateHistoricSynd <- function(syndSlugList, PB) {
                    ave90DayMedianPrice = as.numeric())
   
   for (i in 1:length(syndSlugList)) {
-    PB$message(syndSlugList[i])
     newRowDf <- getHistoricMedianPrices(syndSlugList[i])
     df <- rbind(df, newRowDf)
     PB$tick()
     Sys.sleep(0.5)
   }
+  df[is.na(df)] <- 0
   df
 }
 

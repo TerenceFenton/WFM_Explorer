@@ -1,0 +1,37 @@
+---
+title: "SyndicateAugmentTiers"
+author: "Terry Fenton"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css}
+
+```
+
+## Read-in API Data
+
+Running the below chunk will begin calling historic sales data from the Warframe.Market API for each warframe augment mod available in Syndicates. Unfortunately, each augment mod has to be requested individually, making the process computationally expensive. 
+
+Go grab a coffee while this tinkers away.
+
+```{r, warning=FALSE}
+source("mainWFM.R")
+print("Task Complete!")
+```
+
+## Present Data
+
+The imported data, while featuring many metrics, records the number of sales per hour (volume) and median price per hour across both 48 hour and 90 day intervals. The below stats represent the accumulated number of sales per interval period alongside the average median price across that period.
+
+
+
+```{r, echo=FALSE}
+head(historicAugData)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
