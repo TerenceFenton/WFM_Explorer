@@ -31,7 +31,9 @@ The imported data, while featuring many metrics, records the number of sales per
 
 
 ```{r, echo=FALSE}
-head(historicAugData)
+orderedHistoricData <- historicAugData[order(-historicAugData$total48HourVolume),]
+
+write.csv(orderedHistoricData, file = "wfmSales13Feb2026.csv", row.names = FALSE)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
